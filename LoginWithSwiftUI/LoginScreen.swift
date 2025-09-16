@@ -8,12 +8,15 @@
 import SwiftUI
 
 struct LoginScreen: View {
-    @State var emailId: String = ""
-    @State var password: String = ""
+  
     @Environment(\.dismiss) var dismiss
+    @ObservedObject var loginViewModel = LoginViewModel()
+    @State private var navigateToHome = false
+//    @State private var errorMessage: String? = nil
+    
+    
     var body: some View {
         VStack {
-        
             HStack{
                 VStack(alignment: .leading)  {
                     Text("Welcome!")
@@ -25,20 +28,24 @@ struct LoginScreen: View {
                 }
                 Spacer()
             }
-    
             .padding(.bottom, 80)
             
-            TextField("EmailId",text: $emailId)
+            TextField("EmailId",text: $loginViewModel.emailId)
                 .foregroundStyle(Color(red: 90/255, green: 90/255, blue: 150/255)).foregroundStyle(Color(red: 90/255, green: 90/255, blue: 200/255))
             Divider()
                 .padding(.bottom, 60)
             
-            SecureField("Password",text: $password)
+            SecureField("Password",text: $loginViewModel.password)
             Divider()
                 .padding(.bottom, 60)
             
-            NavigationLink{
-                HomeScreen(homeUserName: emailId)
+            Button{
+                if loginViewModel.isValidEmailPassword(){
+                    navigateToHome = true
+                } else {
+                    print("Login failed.")
+                }
+               
             } label: {
                 Text("LOGIN")
                     .foregroundColor(.white)
@@ -104,9 +111,11 @@ struct LoginScreen: View {
             }
             
         }
+        
         .padding(.leading, 40)
         .padding(.trailing, 40)
-        
+        .navigationDestination(isPresented: $navigateToHome){
+            HomeScreen(homeUserName: loginViewModel.emailId)}
         .navigationBarBackButtonHidden(true)
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(leading: Button(action: {
@@ -119,6 +128,7 @@ struct LoginScreen: View {
      
             
         })
+       
     }
 }
 
