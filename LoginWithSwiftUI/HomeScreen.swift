@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeScreen: View {
-    @State var homeUserName: String = ""
+    var homeUserName: String = ""
     var body: some View {
         VStack {
             Text("Hi, \(homeUserName) Welcome!")
@@ -22,3 +22,15 @@ struct HomeScreen: View {
 #Preview {
     HomeScreen()
 }
+//
+//struct HomeScreen: View {
+//    @ObservedObject var signUpViewModel: SignUpViewModel
+//
+//    var body: some View {
+//        VStack {
+//            Text("Hi, \(signUpViewModel.userName) Welcome!")
+//                .font(.title2)
+//            Spacer()
+//        }
+//    }
+//}

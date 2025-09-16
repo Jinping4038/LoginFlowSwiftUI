@@ -37,7 +37,7 @@ struct ContentView: View {
                     .foregroundStyle(.gray)
                 
                 NavigationLink {
-                    LoginScreen()
+                    LoginScreen(loginViewModel: LoginViewModel())
                 } label: {
                     Text("LOGIN")
                         .frame(width: 280, height: 44)
@@ -56,7 +56,7 @@ struct ContentView: View {
                 
                 
                 NavigationLink{
-                    SignUpScreen()
+                    SignUpScreen(signUpViewModel: SignUpViewModel())
                 } label: {
                     Text("SIGNUP")
                         .frame(width: 280, height: 44)

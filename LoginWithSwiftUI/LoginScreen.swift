@@ -10,7 +10,7 @@ import SwiftUI
 struct LoginScreen: View {
   
     @Environment(\.dismiss) var dismiss
-    @ObservedObject var loginViewModel = LoginViewModel()
+    @StateObject var loginViewModel: LoginViewModel
     @State private var navigateToHome = false
 //    @State private var errorMessage: String? = nil
     
@@ -102,7 +102,7 @@ struct LoginScreen: View {
             HStack {
                 Text("Don't have an account?")
                 NavigationLink{
-                    SignUpScreen()
+                    SignUpScreen(signUpViewModel: SignUpViewModel())
                 } label: {
                     Text("Sign up")
                         .foregroundColor(.blue)
@@ -127,14 +127,21 @@ struct LoginScreen: View {
                 .frame(width:32)
      
             
-        })
-       
+        },
+                            trailing: Button(action: {
+                                dismiss()
+                            }) {
+                                Image("back_arrow")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width:32)
+                            })
     }
 }
 
 #Preview {
     NavigationStack{
-        LoginScreen()
+        LoginScreen(loginViewModel: LoginViewModel())
     }
    
 }

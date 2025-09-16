@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct SignUpScreen: View {
-        @State var userName: String = ""
-        @State var emailId: String = ""
-        @State var password: String = ""
+    @StateObject var signUpViewModel: SignUpViewModel
     @Environment(\.dismiss) var dismiss
     
         var body: some View {
@@ -31,25 +29,25 @@ struct SignUpScreen: View {
                 .padding(.bottom, 80)
                 
                 
-                TextField("Username",text: $userName)
+                TextField("Username",text: $signUpViewModel.userName)
                     .foregroundStyle(Color(red: 90/255, green: 90/255, blue: 150/255)).foregroundStyle(Color(red: 90/255, green: 90/255, blue: 200/255))
                 Divider()
                     .padding(.bottom, 48)
                 
                 
-                TextField("EmailId",text: $emailId)
+                TextField("EmailId",text: $signUpViewModel.emailIdForSignUp)
                     .foregroundStyle(Color(red: 90/255, green: 90/255, blue: 150/255)).foregroundStyle(Color(red: 90/255, green: 90/255, blue: 200/255))
                 Divider()
                     .padding(.bottom, 48)
                 
-                SecureField("Password",text: $password)
+                SecureField("Password",text: $signUpViewModel.passwordForSignUp)
                 Divider()
                     .padding(.bottom, 48)
                 
                 NavigationLink{
-                    HomeScreen(homeUserName: userName)
+                    HomeScreen(homeUserName: signUpViewModel.userName)
                 } label: {
-                    Text("LOGIN")
+                    Text("SIGNUP1")
                         .foregroundColor(.white)
                         .frame(width: 280, height: 44)
                         .background(LinearGradient(colors: [Color.blue, Color.purple], startPoint: .leading, endPoint: .trailing))
@@ -98,7 +96,7 @@ struct SignUpScreen: View {
                 HStack {
                     Text("Already have an account?")
                     NavigationLink{
-                        LoginScreen()
+                        LoginScreen(loginViewModel: LoginViewModel())
                     } label: {
                         Text("Login")
                             .foregroundColor(.blue)
@@ -120,15 +118,12 @@ struct SignUpScreen: View {
                     .frame(width:32)
          
                 
-            }
-            )
-            
-        
-    }
+            })
+        }
 }
 
 #Preview {
     NavigationStack{
-        SignUpScreen()
+        SignUpScreen(signUpViewModel: SignUpViewModel())
     }
 }
